@@ -43,6 +43,24 @@ async function run() {
       const book=await booksCollection.findOne(query);
       res.send(book)
     })
+
+    // =========== Delete Method ============//
+    app.delete('/books/:id',async(req,res)=>{
+      const id= req.params.id;
+      const result= await booksCollection.deleteOne({id: new ObjectId(id)});
+      res.send(result);
+    });
+
+    // =========== Update Method ==============//
+    app.patch('/books/:id',async(req,res)=>{
+      const id=req.params.id;
+      const updatedData=req.body;
+      const result= await booksCollection.updateOne(
+        {_id: new ObjectId(id)},
+        {$set:updatedData}
+      )
+      res.send(result)
+    })
    
     console.log("Connected to MongoDB!");
   } finally {
