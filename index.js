@@ -27,12 +27,14 @@ async function run() {
     const booksCollection=booksData.collection('booksCollection')
     
     app.post('/books',async(req,res)=>{
-      const books={
-        Name:'Harry Potter',
-        Price:400
-      };
+      const books=req.body
       const result=await booksCollection.insertOne(books);
       res.send(result)
+    })
+
+    app.get('/books',async(req,res)=>{
+      const books= await booksCollection.find({}).toArray();
+      res.send(books)
     })
    
     console.log("Connected to MongoDB!");
