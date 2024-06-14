@@ -26,6 +26,7 @@ async function run() {
     const booksData=client.db('booksData')
     const booksCollection=booksData.collection('booksCollection')
     
+    // ========= Add Products =========//
     app.post('/books',async(req,res)=>{
       const books=req.body
       const result=await booksCollection.insertOne(books);
@@ -47,7 +48,7 @@ async function run() {
     // =========== Delete Method ============//
     app.delete('/books/:id',async(req,res)=>{
       const id= req.params.id;
-      const result= await booksCollection.deleteOne({id: new ObjectId(id)});
+      const result= await booksCollection.deleteOne({_id: new ObjectId(id)});
       res.send(result);
     });
 
